@@ -12,6 +12,7 @@ const GlobalStyle = createGlobalStyle`
     transition:all 0.2s;
     font-family: 'Josefin Sans', sans-serif;
     font-size: 18px;
+    color:${({ theme }) => theme.fontColor}
 }
 body{
     

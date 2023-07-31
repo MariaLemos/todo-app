@@ -4,6 +4,7 @@ import { themeMap } from "./theme/Themes";
 import { useState } from "react";
 import { getPreferredTheme } from "./theme/getPreferredTheme";
 import Header from "./components/header/header";
+import InputComponent from "./components/input";
 
 function App() {
   const [themeName, setThemeName] = useState<ThemeName>(getPreferredTheme());
@@ -17,6 +18,8 @@ function App() {
               setThemeName(themeName === "dark" ? "light" : "dark")
             }
           />
+          <InputComponent />
+          Drag and drop to reorder list
         </Main>
       </BackgroundContainer>
     </ThemeProvider>
