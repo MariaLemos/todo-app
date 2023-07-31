@@ -18,6 +18,7 @@ const lightTheme: DefaultTheme = {
   bgImageDesk: LightDeskBg,
   bgImageMobile: LightMobileBg,
   bgColor: lightColors.VeryLightGray,
+  borderColor: lightColors.VeryLightGrayishBlue,
   fontColor: "hsla(235, 14%, 26%, 1)",
   colors: lightColors,
   listBgColor: "#fff",
@@ -38,6 +39,7 @@ const darkTheme: DefaultTheme = {
   listBgColor: darkColors.VeryDarkDesaturatedBlue,
   fontColor: darkColors.LightGrayishBlue,
   bgColor: darkColors.VeryDarkBlue,
+  borderColor: "hsla(235, 14%, 26%, 1)",
   colors: darkColors,
 };
 
