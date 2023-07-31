@@ -1,13 +1,23 @@
 import styled, { ThemeProvider } from "styled-components";
 import GlobalStyle from "./GlobalStyles";
 import { themeMap } from "./theme/Themes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getPreferredTheme } from "./theme/getPreferredTheme";
 import Header from "./components/header/header";
-import InputComponent from "./components/input";
+import TaskComponent from "./components/task.component";
+import TaskListComponent from "./components/tasklist";
+import { FormProvider, useFieldArray, useForm } from "react-hook-form";
+import { watch } from "fs";
+import TaskFormComponent from "./components/taskForm.component";
 
 function App() {
   const [themeName, setThemeName] = useState<ThemeName>(getPreferredTheme());
+  const savedTasks: Task[] = JSON.parse(localStorage.getItem("tasks") ?? "[]");
+
+  const methods = useForm<TaskForm>({
+    defaultValues: { tasks: savedTasks },
+  });
+
   return (
     <ThemeProvider theme={themeMap[themeName]}>
       <BackgroundContainer>
@@ -18,7 +28,9 @@ function App() {
               setThemeName(themeName === "dark" ? "light" : "dark")
             }
           />
-          <InputComponent />
+          <FormProvider {...methods}>
+            <TaskFormComponent />
+          </FormProvider>
           Drag and drop to reorder list
         </Main>
       </BackgroundContainer>
