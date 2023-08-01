@@ -1,23 +1,23 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
 import styled from "styled-components";
-
 import TaskComponent from "./task.component";
 import TaskListComponent from "./tasklist";
 import { useEffect } from "react";
-import { DropResult } from "react-beautiful-dnd";
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
-const TaskFormComponent: React.FC<{}> = ({}) => {
+const TaskFormComponent: React.FC = () => {
   const methods = useFormContext<TaskForm>();
   const { watch, getValues } = methods;
 
-  const { fields, append, move, swap } = useFieldArray({
+  const { fields, append, swap } = useFieldArray({
     control: methods.control, // control props comes from useForm (optional: if you are using FormContext)
     name: "tasks", // unique name for your Field Array
   });
   useEffect(() => {
     console.log(watch());
     localStorage.setItem("tasks", JSON.stringify(getValues("tasks")));
-  }, [watch("tasks")]);
+  }, [watch("tasks"), getValues]);
+
   const handleDrag = ({ source, destination }: DropResult) => {
     if (destination) {
       swap(source.index, destination.index);
@@ -29,7 +29,9 @@ const TaskFormComponent: React.FC<{}> = ({}) => {
         addTask={(newTask: Task) => append(newTask, { shouldFocus: false })}
         name="newTask"
       />
-      <TaskListComponent tasks={fields} handleDrag={handleDrag} />
+      <DragDropContext onDragEnd={handleDrag}>
+        <TaskListComponent tasks={fields} />
+      </DragDropContext>
     </>
   );
 };

@@ -20,7 +20,8 @@ const lightTheme: DefaultTheme = {
   bgColor: lightColors.VeryLightGray,
   borderColor: lightColors.VeryLightGrayishBlue,
   fontColor: "hsla(235, 14%, 26%, 1)",
-  colors: lightColors,
+  buttonFontColor: lightColors.DarkGrayishBlue,
+  buttonHoverFontColor: lightColors.VeryDarkGrayishBlue,
   shadowColor: "rgba(194, 195, 214, 0.50)",
   listBgColor: "#fff",
 };
@@ -42,7 +43,8 @@ const darkTheme: DefaultTheme = {
   bgColor: darkColors.VeryDarkBlue,
   borderColor: "hsla(235, 14%, 26%, 1)",
   shadowColor: "rgba(0, 0, 0, 0.50)",
-  colors: darkColors,
+  buttonFontColor: "hsla(235, 16%, 42%, 1)",
+  buttonHoverFontColor: darkColors.LightGrayishBluehover,
 };
 
 export const themeMap = {

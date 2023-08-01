@@ -25,9 +25,18 @@ body{
 
 
 button{
-    background-color:transparent ;
-    border:none;
-  color:inherit;
+    all:unset;
+  cursor: pointer;
+  color: ${({ theme }) => theme.buttonFontColor};
+  text-align: right;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.01213rem;
+  &:hover{
+    color: ${({ theme }) => theme.buttonHoverFontColor};
+  }
 }
 
 `;

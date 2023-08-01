@@ -7,6 +7,10 @@ declare module "styled-components" {
     bgImageDesk: string;
     bgImageMobile: string;
     bgColor: string;
-    colors: any;
+    listBgColor: string;
+    fontColor: string;
+    borderColor: string;
+    shadowColor: string;
+    buttonFontColor: string;
   }
 }
