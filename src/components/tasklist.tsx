@@ -93,6 +93,7 @@ const TaskListWrapper = styled.div`
   overflow: hidden;
   background-color: ${({ theme }) => theme.listBgColor};
   padding-bottom: 0.25rem;
+  box-shadow: 0px 35px 50px -15px ${({ theme }) => theme.shadowColor};
 `;
 const Task = styled(TaskComponent)<{ isDragging: boolean }>`
   border-bottom: 1px solid ${({ theme }) => theme.borderColor};
