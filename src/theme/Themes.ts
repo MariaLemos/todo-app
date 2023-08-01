@@ -21,6 +21,7 @@ const lightTheme: DefaultTheme = {
   borderColor: lightColors.VeryLightGrayishBlue,
   fontColor: "hsla(235, 14%, 26%, 1)",
   colors: lightColors,
+  shadowColor: "rgba(194, 195, 214, 0.50)",
   listBgColor: "#fff",
 };
 const darkColors = {
@@ -40,6 +41,7 @@ const darkTheme: DefaultTheme = {
   fontColor: darkColors.LightGrayishBlue,
   bgColor: darkColors.VeryDarkBlue,
   borderColor: "hsla(235, 14%, 26%, 1)",
+  shadowColor: "rgba(0, 0, 0, 0.50)",
   colors: darkColors,
 };
 
