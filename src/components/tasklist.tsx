@@ -1,4 +1,4 @@
-import { FieldArrayWithId } from "react-hook-form";
+import { FieldArrayWithId, useFormContext } from "react-hook-form";
 import styled, { css } from "styled-components";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import TaskComponent from "./task.component";
@@ -16,10 +16,9 @@ const TaskListComponent: React.FC<{
   tasks: TaskField[];
 }> = ({ tasks }) => {
   const [filter, setFilter] = useState<"all" | "active" | "completed">("all");
-  const [filteredTasks, setFilteredTasks] = useState<TaskField[]>(tasks);
+
   const activeTasks = tasks.filter((task) => !task.isDone) ?? [];
-  const completedTasks = tasks.filter((task) => task.isDone) ?? [];
-  console.log(activeTasks, completedTasks);
+  const { setValue } = useFormContext<TaskForm>();
 
   return (
     <Droppable droppableId="task-items">
@@ -52,7 +51,6 @@ const TaskListComponent: React.FC<{
                 isActive={filter === "all"}
                 onClick={() => {
                   setFilter("all");
-                  setFilteredTasks(tasks);
                 }}
               >
                 All
@@ -61,7 +59,6 @@ const TaskListComponent: React.FC<{
                 isActive={filter === "active"}
                 onClick={() => {
                   setFilter("active");
-                  setFilteredTasks(activeTasks);
                 }}
               >
                 Active
@@ -70,13 +67,18 @@ const TaskListComponent: React.FC<{
                 isActive={filter === "completed"}
                 onClick={() => {
                   setFilter("completed");
-                  setFilteredTasks(completedTasks);
                 }}
               >
                 Completed
               </FilterButton>
             </FilterToggle>
-            <ClearButton>Clear Completed</ClearButton>
+            <ClearButton
+              onClick={() => {
+                setValue("tasks", activeTasks);
+              }}
+            >
+              Clear Completed
+            </ClearButton>
           </ActionsWrapper>
           {provided.placeholder}
         </TaskListWrapper>
