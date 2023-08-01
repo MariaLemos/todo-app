@@ -4,12 +4,13 @@ import styled from "styled-components";
 import TaskComponent from "./task.component";
 import TaskListComponent from "./tasklist";
 import { useEffect } from "react";
+import { DropResult } from "react-beautiful-dnd";
 
 const TaskFormComponent: React.FC<{}> = ({}) => {
   const methods = useFormContext<TaskForm>();
   const { watch, getValues } = methods;
 
-  const { fields, append } = useFieldArray({
+  const { fields, append, move, swap } = useFieldArray({
     control: methods.control, // control props comes from useForm (optional: if you are using FormContext)
     name: "tasks", // unique name for your Field Array
   });
@@ -17,18 +18,23 @@ const TaskFormComponent: React.FC<{}> = ({}) => {
     console.log(watch());
     localStorage.setItem("tasks", JSON.stringify(getValues("tasks")));
   }, [watch("tasks")]);
+  const handleDrag = ({ source, destination }: DropResult) => {
+    if (destination) {
+      swap(source.index, destination.index);
+    }
+  };
   return (
     <>
       <NewTask
         addTask={(newTask: Task) => append(newTask, { shouldFocus: false })}
-        mode="newTask"
         name="newTask"
       />
-      <TaskListComponent tasks={fields} />
+      <TaskListComponent tasks={fields} handleDrag={handleDrag} />
     </>
   );
 };
 export default TaskFormComponent;
 const NewTask = styled(TaskComponent)`
   border-radius: 0.3125rem;
+  box-shadow: 0px 35px 50px -15px ${({ theme }) => theme.shadowColor};
 `;

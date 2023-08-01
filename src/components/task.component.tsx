@@ -1,28 +1,29 @@
 import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
 import RadioComponent from "../commons/radio";
+import { DraggableProvided } from "react-beautiful-dnd";
 
 const TaskComponent: React.FC<{
-  addTask: (task: Task) => void;
-  mode: "newTask" | "editTask";
+  addTask?: (task: Task) => void;
   name: "newTask" | `tasks.${number}`;
   className?: string;
-}> = ({ addTask, name, mode, className }) => {
+  provided?: DraggableProvided;
+}> = ({ addTask, name, className, provided }) => {
   const methods = useFormContext<TaskForm>();
   const { register, getValues, setValue } = methods;
-  function drag(ev: any) {
-    ev.dataTransfer.setData("text", ev.target.id);
-  }
+
   return (
     <TaskWrapper
       className={className}
-      draggable="true"
-      onDragStart={(event) => drag(event)}
+      ref={provided?.innerRef}
+      {...provided?.draggableProps}
+      {...provided?.dragHandleProps}
       onSubmit={async (e) => {
         e.preventDefault();
-        const values = getValues("newTask");
-        addTask(values);
-        if (mode === "newTask") {
+
+        if (addTask) {
+          const values = getValues("newTask");
+          addTask(values);
           setValue("newTask.isDone", false);
           setValue("newTask.name", "");
         }
@@ -42,10 +43,8 @@ const TaskWrapper = styled.form`
   background-color: ${({ theme }) => theme.listBgColor};
   padding: 1.25rem;
   width: 100%;
-  box-shadow: 0px 35px 50px -15px rgba(194, 195, 214, 0.5);
 `;
 
 const InputStyled = styled.input`
   all: unset;
-  width: 100%;
 `;
