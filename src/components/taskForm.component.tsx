@@ -9,7 +9,7 @@ const TaskFormComponent: React.FC = () => {
   const methods = useFormContext<TaskForm>();
   const { watch, getValues } = methods;
 
-  const { fields, append, swap } = useFieldArray({
+  const { fields, append, swap, remove } = useFieldArray({
     control: methods.control, // control props comes from useForm (optional: if you are using FormContext)
     name: "tasks", // unique name for your Field Array
   });
@@ -30,7 +30,7 @@ const TaskFormComponent: React.FC = () => {
         name="newTask"
       />
       <DragDropContext onDragEnd={handleDrag}>
-        <TaskListComponent tasks={fields} />
+        <TaskListComponent tasks={fields} removeAction={remove} />
       </DragDropContext>
     </>
   );

@@ -1,4 +1,8 @@
-import { FieldArrayWithId, useFormContext } from "react-hook-form";
+import {
+  FieldArrayWithId,
+  UseFieldArrayRemove,
+  useFormContext,
+} from "react-hook-form";
 import styled, { css } from "styled-components";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import TaskComponent from "./task.component";
@@ -14,7 +18,8 @@ type TaskField = FieldArrayWithId<
 
 const TaskListComponent: React.FC<{
   tasks: TaskField[];
-}> = ({ tasks }) => {
+  removeAction: UseFieldArrayRemove;
+}> = ({ tasks, removeAction }) => {
   const [filter, setFilter] = useState<"all" | "active" | "completed">("all");
 
   const activeTasks = tasks.filter((task) => !task.isDone) ?? [];
@@ -38,6 +43,7 @@ const TaskListComponent: React.FC<{
                       name={`tasks.${index}`}
                       isDragging={snapshot.isDragging}
                       provided={provided}
+                      removeTask={() => removeAction(index)}
                     />
                   );
                 }}

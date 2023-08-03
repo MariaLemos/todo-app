@@ -2,13 +2,15 @@ import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
 import RadioComponent from "../commons/radio";
 import { DraggableProvided } from "react-beautiful-dnd";
+import { ReactComponent as IconDelete } from "../assets/icon-cross.svg";
 
 const TaskComponent: React.FC<{
   addTask?: (task: Task) => void;
   name: "newTask" | `tasks.${number}`;
   className?: string;
   provided?: DraggableProvided;
-}> = ({ addTask, name, className, provided }) => {
+  removeTask?: () => void;
+}> = ({ removeTask, addTask, name, className, provided }) => {
   const methods = useFormContext<TaskForm>();
   const { register, getValues, setValue } = methods;
 
@@ -37,12 +39,18 @@ const TaskComponent: React.FC<{
         placeholder="Create a new todo…"
         required
       />
+      {removeTask && (
+        <DeleteButton onClick={removeTask}>
+          <IconDelete />
+        </DeleteButton>
+      )}
     </TaskWrapper>
   );
 };
 export default TaskComponent;
 const TaskWrapper = styled.form<{ isDone: boolean }>`
-  display: flex;
+  display: grid;
+  grid-template-columns: 2rem 1fr 2rem;
   gap: 1.5rem;
   height: 4rem;
   background-color: ${({ theme }) => theme.listBgColor};
@@ -55,4 +63,7 @@ const TaskWrapper = styled.form<{ isDone: boolean }>`
 const InputStyled = styled.input`
   all: unset;
   cursor: text !important;
+`;
+const DeleteButton = styled.button`
+  padding: 0.25rem;
 `;
