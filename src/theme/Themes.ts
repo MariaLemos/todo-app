@@ -24,6 +24,7 @@ const lightTheme: DefaultTheme = {
   buttonHoverFontColor: lightColors.VeryDarkGrayishBlue,
   shadowColor: "rgba(194, 195, 214, 0.50)",
   listBgColor: "#fff",
+  doneFontColor: lightColors.LightGrayishBlue,
 };
 const darkColors = {
   VeryDarkBlue: "hsl(235, 21%, 11%)",
@@ -34,6 +35,7 @@ const darkColors = {
   VeryDarkGrayishBlue: "hsl(233, 14%, 35%)",
   VeryDarkGrayishBlue2: " hsl(237, 14%, 26%)",
 };
+
 const darkTheme: DefaultTheme = {
   name: "dark",
   bgImageDesk: DarkDeskBg,
@@ -45,6 +47,7 @@ const darkTheme: DefaultTheme = {
   shadowColor: "rgba(0, 0, 0, 0.50)",
   buttonFontColor: "hsla(235, 16%, 42%, 1)",
   buttonHoverFontColor: darkColors.LightGrayishBluehover,
+  doneFontColor: darkColors.VeryDarkGrayishBlue,
 };
 
 export const themeMap = {

@@ -16,6 +16,7 @@ const TaskComponent: React.FC<{
     <TaskWrapper
       className={className}
       ref={provided?.innerRef}
+      isDone={getValues(`${name}.isDone`)}
       {...provided?.draggableProps}
       {...provided?.dragHandleProps}
       onSubmit={async (e) => {
@@ -31,20 +32,27 @@ const TaskComponent: React.FC<{
     >
       <RadioComponent name={`${name}.isDone`} methods={methods} />
 
-      <InputStyled {...register(`${name}.name`)} />
+      <InputStyled
+        {...register(`${name}.name`)}
+        placeholder="Create a new todo…"
+        required
+      />
     </TaskWrapper>
   );
 };
 export default TaskComponent;
-const TaskWrapper = styled.form`
+const TaskWrapper = styled.form<{ isDone: boolean }>`
   display: flex;
   gap: 1.5rem;
   height: 4rem;
   background-color: ${({ theme }) => theme.listBgColor};
   padding: 1.25rem;
   width: 100%;
+  text-decoration: ${({ isDone }) => (isDone ? "line-through" : "none")};
+  color: ${({ isDone, theme }) => (isDone ? theme.doneFontColor : "inherit")};
 `;
 
 const InputStyled = styled.input`
   all: unset;
+  cursor: text !important;
 `;
