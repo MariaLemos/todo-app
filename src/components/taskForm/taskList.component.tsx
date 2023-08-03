@@ -6,7 +6,6 @@ import {
 import styled, { css } from "styled-components";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import TaskComponent from "../task/task.component";
-import { useState } from "react";
 import TaskFiltersComponent from "./taskFilters.component";
 import useIsMobile from "../../commons/isMobile";
 
@@ -22,9 +21,9 @@ const TaskListComponent: React.FC<{
   tasks: TaskField[];
   removeAction: UseFieldArrayRemove;
 }> = ({ tasks, removeAction }) => {
-  const [filter, setFilter] = useState<"all" | "active" | "completed">("all");
   const activeTasks = tasks.filter((task) => !task.isDone) ?? [];
-  const { setValue } = useFormContext<TaskForm>();
+  const { setValue, getValues } = useFormContext<TaskForm>();
+  const filter = getValues("filter");
   const isMobile = useIsMobile();
 
   return (
@@ -61,12 +60,7 @@ const TaskListComponent: React.FC<{
       </Droppable>
       <ActionsWrapper>
         <span>{`${activeTasks.length} items left`}</span>
-        {!isMobile && (
-          <TaskFiltersComponent
-            setSelectedFilter={setFilter}
-            selectedFilter={filter}
-          />
-        )}
+        {!isMobile && <TaskFiltersComponent />}
         <ClearButton
           onClick={() => {
             setValue("tasks", activeTasks);
@@ -80,7 +74,6 @@ const TaskListComponent: React.FC<{
 };
 export default TaskListComponent;
 const TaskListWrapper = styled.div`
-  margin: 1.5rem 0;
   border-radius: 0.3125rem;
   overflow: hidden;
   background-color: ${({ theme }) => theme.listBgColor};

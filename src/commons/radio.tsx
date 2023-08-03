@@ -26,7 +26,7 @@ const RadioStyled = styled.input`
     background-repeat: no-repeat;
     background-position: center;
   }
-  &:hover {
+  &:not(:checked):hover {
     background: url(${hoverBg});
     background-repeat: no-repeat;
     background-position: center;

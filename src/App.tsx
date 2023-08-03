@@ -7,13 +7,14 @@ import Header from "./components/header/header";
 import { FormProvider, useForm } from "react-hook-form";
 import TaskFormComponent from "./components/taskForm/taskForm.component";
 import TaskFiltersComponent from "./components/taskForm/taskFilters.component";
+import useIsMobile from "./commons/isMobile";
 
 function App() {
   const [themeName, setThemeName] = useState<ThemeName>(getPreferredTheme());
   const savedTasks: Task[] = JSON.parse(localStorage.getItem("tasks") ?? "[]");
-
+  const isMobile = useIsMobile();
   const methods = useForm<TaskForm>({
-    defaultValues: { tasks: savedTasks },
+    defaultValues: { tasks: savedTasks, filter: "all" },
   });
 
   return (
@@ -28,8 +29,8 @@ function App() {
           />
           <FormProvider {...methods}>
             <TaskFormComponent />
+            {isMobile && <TaskFiltersComponent />}
           </FormProvider>
-
           <p> Drag and drop to reorder list</p>
         </Main>
       </BackgroundContainer>
@@ -42,6 +43,8 @@ const Main = styled.main`
   max-width: 33.75rem;
   width: 90%;
   margin: auto;
+  display: grid;
+  gap: 1.5rem;
   > p {
     text-align: center;
     color: ${({ theme }) => theme.buttonFontColor};
