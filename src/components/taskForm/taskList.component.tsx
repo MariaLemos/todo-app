@@ -7,6 +7,8 @@ import styled, { css } from "styled-components";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import TaskComponent from "../task/task.component";
 import { useState } from "react";
+import TaskFiltersComponent from "./taskFilters.component";
+import useIsMobile from "../../commons/isMobile";
 
 type TaskField = FieldArrayWithId<
   {
@@ -21,75 +23,59 @@ const TaskListComponent: React.FC<{
   removeAction: UseFieldArrayRemove;
 }> = ({ tasks, removeAction }) => {
   const [filter, setFilter] = useState<"all" | "active" | "completed">("all");
-
   const activeTasks = tasks.filter((task) => !task.isDone) ?? [];
   const { setValue } = useFormContext<TaskForm>();
+  const isMobile = useIsMobile();
 
   return (
-    <Droppable droppableId="task-items">
-      {(provided) => (
-        <TaskListWrapper {...provided.droppableProps} ref={provided.innerRef}>
-          {tasks.map((task, index) => {
-            const shouldShowActiveTask = !task.isDone && filter !== "completed";
-            const shouldShowCompletedTask = task.isDone && filter !== "active";
-            if (!shouldShowActiveTask && !shouldShowCompletedTask) {
-              return null;
-            }
-            return (
-              <Draggable key={task.id} draggableId={task.id} index={index}>
-                {(provided, snapshot) => {
-                  return (
-                    <Task
-                      name={`tasks.${index}`}
-                      isDragging={snapshot.isDragging}
-                      provided={provided}
-                      removeTask={() => removeAction(index)}
-                    />
-                  );
-                }}
-              </Draggable>
-            );
-          })}
-          <ActionsWrapper>
-            <span>{`${activeTasks.length} items left`}</span>
-            <FilterToggle>
-              <FilterButton
-                isActive={filter === "all"}
-                onClick={() => {
-                  setFilter("all");
-                }}
-              >
-                All
-              </FilterButton>
-              <FilterButton
-                isActive={filter === "active"}
-                onClick={() => {
-                  setFilter("active");
-                }}
-              >
-                Active
-              </FilterButton>
-              <FilterButton
-                isActive={filter === "completed"}
-                onClick={() => {
-                  setFilter("completed");
-                }}
-              >
-                Completed
-              </FilterButton>
-            </FilterToggle>
-            <ClearButton
-              onClick={() => {
-                setValue("tasks", activeTasks);
-              }}
-            >
-              Clear Completed
-            </ClearButton>
-          </ActionsWrapper>
-          {provided.placeholder}
-        </TaskListWrapper>
-      )}
-    </Droppable>
+    <TaskListWrapper>
+      <Droppable droppableId="task-items">
+        {(provided) => (
+          <div {...provided.droppableProps} ref={provided.innerRef}>
+            {tasks.map((task, index) => {
+              const shouldShowActiveTask =
+                !task.isDone && filter !== "completed";
+              const shouldShowCompletedTask =
+                task.isDone && filter !== "active";
+              if (!shouldShowActiveTask && !shouldShowCompletedTask) {
+                return null;
+              }
+              return (
+                <Draggable key={task.id} draggableId={task.id} index={index}>
+                  {(provided, snapshot) => {
+                    return (
+                      <Task
+                        name={`tasks.${index}`}
+                        isDragging={snapshot.isDragging}
+                        provided={provided}
+                        removeTask={() => removeAction(index)}
+                      />
+                    );
+                  }}
+                </Draggable>
+              );
+            })}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+      <ActionsWrapper>
+        <span>{`${activeTasks.length} items left`}</span>
+        {!isMobile && (
+          <TaskFiltersComponent
+            setSelectedFilter={setFilter}
+            selectedFilter={filter}
+          />
+        )}
+        <ClearButton
+          onClick={() => {
+            setValue("tasks", activeTasks);
+          }}
+        >
+          Clear Completed
+        </ClearButton>
+      </ActionsWrapper>
+    </TaskListWrapper>
   );
 };
 export default TaskListComponent;
@@ -126,18 +112,6 @@ const ActionsWrapper = styled.div`
     font-size: 0.875rem;
     letter-spacing: -0.01213rem;
   }
-`;
-const FilterToggle = styled.div`
-  display: flex;
-  gap: 1.19rem;
-  @media (max-width: 500px) {
-    position: absolute;
-    top: 5rem;
-    background-color: ${({ theme }) => theme.listBgColor};
-  }
-`;
-const FilterButton = styled.button<{ isActive: boolean }>`
-  color: ${({ isActive }) => (isActive ? "hsla(220, 98%, 61%, 1)" : "inherit")};
 `;
 
 const ClearButton = styled.button``;

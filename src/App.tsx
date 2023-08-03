@@ -6,6 +6,7 @@ import { getPreferredTheme } from "./theme/getPreferredTheme";
 import Header from "./components/header/header";
 import { FormProvider, useForm } from "react-hook-form";
 import TaskFormComponent from "./components/taskForm/taskForm.component";
+import TaskFiltersComponent from "./components/taskForm/taskFilters.component";
 
 function App() {
   const [themeName, setThemeName] = useState<ThemeName>(getPreferredTheme());
@@ -28,7 +29,8 @@ function App() {
           <FormProvider {...methods}>
             <TaskFormComponent />
           </FormProvider>
-          Drag and drop to reorder list
+
+          <p> Drag and drop to reorder list</p>
         </Main>
       </BackgroundContainer>
     </ThemeProvider>
@@ -40,6 +42,11 @@ const Main = styled.main`
   max-width: 33.75rem;
   width: 90%;
   margin: auto;
+  > p {
+    text-align: center;
+    color: ${({ theme }) => theme.buttonFontColor};
+    margin: auto;
+  }
 `;
 const BackgroundContainer = styled.div`
   width: 100%;
