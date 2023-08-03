@@ -32,4 +32,5 @@ const Title = styled.h1`
 
 const ChangeThemeButton = styled.button`
   all: unset;
+  cursor: pointer;
 `;
