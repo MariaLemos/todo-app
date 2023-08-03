@@ -5,7 +5,7 @@ import {
 } from "react-hook-form";
 import styled, { css } from "styled-components";
 import { Droppable, Draggable } from "react-beautiful-dnd";
-import TaskComponent from "./task.component";
+import TaskComponent from "../task/task.component";
 import { useState } from "react";
 
 type TaskField = FieldArrayWithId<
@@ -120,6 +120,7 @@ const ActionsWrapper = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
+  position: relative;
   span {
     color: ${({ theme }) => theme.buttonFontColor};
     font-size: 0.875rem;
@@ -129,6 +130,11 @@ const ActionsWrapper = styled.div`
 const FilterToggle = styled.div`
   display: flex;
   gap: 1.19rem;
+  @media (max-width: 500px) {
+    position: absolute;
+    top: 5rem;
+    background-color: ${({ theme }) => theme.listBgColor};
+  }
 `;
 const FilterButton = styled.button<{ isActive: boolean }>`
   color: ${({ isActive }) => (isActive ? "hsla(220, 98%, 61%, 1)" : "inherit")};

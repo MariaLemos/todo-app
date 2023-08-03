@@ -1,7 +1,7 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
 import styled from "styled-components";
-import TaskComponent from "./task.component";
-import TaskListComponent from "./tasklist";
+import TaskComponent from "../task/task.component";
+import TaskListComponent from "./taskList.component";
 import { useEffect } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
@@ -14,7 +14,6 @@ const TaskFormComponent: React.FC = () => {
     name: "tasks", // unique name for your Field Array
   });
   useEffect(() => {
-    console.log(watch());
     localStorage.setItem("tasks", JSON.stringify(getValues("tasks")));
   }, [watch("tasks"), getValues]);
 

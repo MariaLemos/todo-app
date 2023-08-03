@@ -1,8 +1,8 @@
 import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
-import RadioComponent from "../commons/radio";
+import RadioComponent from "../../commons/radio";
 import { DraggableProvided } from "react-beautiful-dnd";
-import { ReactComponent as IconDelete } from "../assets/icon-cross.svg";
+import { ReactComponent as IconDelete } from "../../assets/icon-cross.svg";
 
 const TaskComponent: React.FC<{
   addTask?: (task: Task) => void;

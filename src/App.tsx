@@ -5,7 +5,7 @@ import { useState } from "react";
 import { getPreferredTheme } from "./theme/getPreferredTheme";
 import Header from "./components/header/header";
 import { FormProvider, useForm } from "react-hook-form";
-import TaskFormComponent from "./components/taskForm.component";
+import TaskFormComponent from "./components/taskForm/taskForm.component";
 
 function App() {
   const [themeName, setThemeName] = useState<ThemeName>(getPreferredTheme());
